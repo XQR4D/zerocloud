@@ -538,7 +538,7 @@
         clearLog();
 
         if (!token || !owner || !repo) {
-          log('Заполните поля, чтобы продолжить.', 'error');
+          log('Заполните Token, Owner и Repository', 'error');
           return;
         }
         if (!fileInput.files.length) {
@@ -579,6 +579,9 @@
 
         const apiUrl = `https://api.github.com/repos/${owner}/${repo}/releases`;
 
+        const WORKER_URL =
+          'https://zerocloud-upload.frozenjuggernaut.workers.dev/';
+
         btn.disabled = true;
         btn.innerHTML = 'Загрузка...';
 
@@ -599,7 +602,7 @@
             body: JSON.stringify({
               tag_name: tag,
               name: releaseName,
-              body: `Релиз создан через Zerocloud`,
+              body: `Релиз создан через Zerocloud\nФайл: ${filename}`,
               draft: false,
               prerelease: false,
             }),
@@ -623,6 +626,7 @@
 
           log(`Релиз создан`, 'success');
           log(data.html_url, 'success');
+
           log('Загружаю файл...', 'info');
 
           const uploadUrl = data.upload_url.replace(
@@ -630,27 +634,32 @@
             `?name=${encodeURIComponent(filename)}`
           );
 
-          const uploadRes = await fetch(uploadUrl, {
+          const formData = new FormData();
+          formData.append('token', token);
+          formData.append('upload_url', uploadUrl);
+          formData.append('file', file);
+
+          const uploadRes = await fetch(WORKER_URL, {
             method: 'POST',
-            headers: {
-              Authorization: `token ${token}`,
-              Accept: 'application/vnd.github+json',
-              'X-GitHub-Api-Version': '2022-11-28',
-              'Content-Type': 'application/octet-stream',
-            },
-            body: file,
+            body: formData,
           });
 
+          const uploadText = await uploadRes.text();
+          let asset;
+          try {
+            asset = JSON.parse(uploadText);
+          } catch (e) {
+            asset = uploadText;
+          }
+
           if (!uploadRes.ok) {
-            const err = await uploadRes.json();
             log(
-              `Ошибка загрузки: ${err.message || JSON.stringify(err)}`,
+              `Ошибка загрузки: ${asset.message || JSON.stringify(asset)}`,
               'error'
             );
             throw new Error('upload failed');
           }
 
-          const asset = await uploadRes.json();
           log('Готово!', 'success');
           log(asset.browser_download_url, 'success');
         } catch (e) {
@@ -660,13 +669,13 @@
         } finally {
           btn.disabled = false;
           btn.innerHTML = `
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-    <polyline points="17 8 12 3 7 8"/>
-    <line x1="12" y1="3" x2="12" y2="15"/>
-  </svg>
-  Загрузить и отправить
-`;
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+      Загрузить и отправить
+    `;
         }
       }
     </script>
