@@ -14,337 +14,8 @@
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/></svg>"
     />
-    <style>
-      :root {
-        --bg: #0c0c0e;
-        --surface: #161618;
-        --border: #2a2a2e;
-        --text: #ececed;
-        --text-secondary: #a1a1a6;
-        --accent: #3b82f6;
-        --accent-hover: #2563eb;
-        --success: #22c55e;
-        --error: #ef4444;
-        --radius: 10px;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family:
-          'Inter',
-          -apple-system,
-          BlinkMacSystemFont,
-          sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        line-height: 1.5;
-      }
-
-      .card {
-        width: 100%;
-        max-width: 480px;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 32px;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-      }
-
-      .header {
-        margin-bottom: 28px;
-        text-align: center;
-      }
-
-      .header h1 {
-        font-size: 20px;
-        font-weight: 600;
-        letter-spacing: -0.02em;
-        margin-bottom: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
-
-      .header p {
-        font-size: 14px;
-        color: var(--text-secondary);
-      }
-
-      .header a {
-        display: inline-block;
-        margin-top: 4px;
-      }
-
-      .field {
-        margin-bottom: 18px;
-      }
-
-      label {
-        display: block;
-        font-size: 13px;
-        font-weight: 500;
-        color: var(--text-secondary);
-        margin-bottom: 6px;
-      }
-
-      input[type='text'],
-      input[type='password'],
-      input[type='file'] {
-        width: 100%;
-        background: #0f0f11;
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 11px 14px;
-        font-size: 14px;
-        color: var(--text);
-        font-family: inherit;
-        transition: border-color 0.15s ease;
-      }
-
-      input[type='text']:focus,
-      input[type='password']:focus {
-        outline: none;
-        border-color: #3b82f6;
-      }
-
-      input[type='file'] {
-        padding: 10px;
-        cursor: pointer;
-      }
-
-      input[type='file']::file-selector-button {
-        background: #1f1f23;
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: 6px 12px;
-        margin-right: 12px;
-        color: var(--text);
-        font-size: 13px;
-        font-family: inherit;
-        cursor: pointer;
-        transition: background 0.15s;
-      }
-
-      input[type='file']::file-selector-button:hover {
-        background: #2a2a2e;
-      }
-
-      .mode-switch {
-        display: flex;
-        background: #0f0f11;
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 3px;
-        margin-bottom: 20px;
-      }
-
-      .mode-btn {
-        flex: 1;
-        padding: 8px;
-        border: none;
-        background: transparent;
-        color: var(--text-secondary);
-        font-size: 13px;
-        font-weight: 500;
-        border-radius: 7px;
-        cursor: pointer;
-        transition: all 0.15s ease;
-        font-family: inherit;
-      }
-
-      .mode-btn.active {
-        background: #1f1f23;
-        color: var(--text);
-      }
-
-      .manual-fields {
-        display: none;
-      }
-
-      .manual-fields.visible {
-        display: block;
-      }
-
-      .btn {
-        width: 100%;
-        margin-top: 8px;
-        background: var(--accent);
-        color: white;
-        border: none;
-        border-radius: var(--radius);
-        padding: 12px;
-        font-size: 14px;
-        font-weight: 500;
-        font-family: inherit;
-        cursor: pointer;
-        transition: background 0.15s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
-
-      .btn:hover {
-        background: var(--accent-hover);
-      }
-
-      .btn:active {
-        transform: scale(0.99);
-      }
-
-      .btn:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-
-      .log {
-        margin-top: 24px;
-        background: #0f0f11;
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 12px;
-        font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-        font-size: 12.5px;
-        line-height: 1.5;
-        color: var(--text-secondary);
-        max-height: 280px;
-        overflow-y: auto;
-        display: none;
-      }
-
-      .log.visible {
-        display: block;
-      }
-
-      .log-entry {
-        display: flex;
-        gap: 10px;
-        padding: 6px 8px;
-        border-radius: 6px;
-        margin-bottom: 2px;
-      }
-
-      .log-entry:last-child {
-        margin-bottom: 0;
-      }
-
-      .log-time {
-        color: #666;
-        flex-shrink: 0;
-        font-size: 11px;
-        padding-top: 1px;
-      }
-
-      .log-icon {
-        flex-shrink: 0;
-        width: 16px;
-        text-align: center;
-      }
-
-      .log-msg {
-        flex: 1;
-        word-break: break-all;
-      }
-
-      .log-entry.info .log-icon {
-        color: #60a5fa;
-      }
-      .log-entry.success .log-icon {
-        color: var(--success);
-      }
-      .log-entry.error .log-icon {
-        color: var(--error);
-      }
-      .log-entry.success .log-msg {
-        color: #86efac;
-      }
-      .log-entry.error .log-msg {
-        color: #fca5a5;
-      }
-
-      body::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        z-index: -2;
-        background:
-          radial-gradient(
-            circle at 15% 25%,
-            rgba(59, 130, 246, 0.18) 0%,
-            transparent 45%
-          ),
-          radial-gradient(
-            circle at 85% 20%,
-            rgba(139, 92, 246, 0.14) 0%,
-            transparent 45%
-          ),
-          radial-gradient(
-            circle at 70% 80%,
-            rgba(14, 165, 233, 0.12) 0%,
-            transparent 45%
-          ),
-          radial-gradient(
-            circle at 25% 75%,
-            rgba(99, 102, 241, 0.1) 0%,
-            transparent 45%
-          );
-        animation: orbs 22s ease-in-out infinite alternate;
-      }
-
-      body::after {
-        content: '';
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-        background-image:
-          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        background-size: 64px 64px;
-        mask-image: radial-gradient(
-          ellipse at center,
-          black 30%,
-          transparent 75%
-        );
-        pointer-events: none;
-      }
-
-      @keyframes orbs {
-        0% {
-          background-position:
-            0% 0%,
-            100% 0%,
-            100% 100%,
-            0% 100%;
-          filter: hue-rotate(0deg);
-        }
-        50% {
-          background-position:
-            30% 40%,
-            70% 20%,
-            60% 70%,
-            20% 80%;
-        }
-        100% {
-          background-position:
-            10% 60%,
-            90% 50%,
-            40% 30%,
-            50% 10%;
-          filter: hue-rotate(15deg);
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/script.js" defer></script>
   </head>
   <body>
     <div class="card">
@@ -378,17 +49,29 @@
       </div>
 
       <div class="field">
-        <label>GitHub Token*</label>
-        <input type="password" id="token" placeholder="ghp_" />
+        <label>GitHub токен*</label>
+        <input
+          type="password"
+          id="token"
+          placeholder="ghp_..."
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="repos-box" id="reposBox">
+        <div class="repos-status" id="reposStatus"></div>
+        <select id="repoSelect">
+          <option value="">Выберите репозиторий</option>
+        </select>
       </div>
 
       <div class="field">
-        <label>Owner*</label>
+        <label>Юзернейм*</label>
         <input type="text" id="owner" placeholder="username" />
       </div>
 
       <div class="field">
-        <label>Repository*</label>
+        <label>Название репозитория*</label>
         <input type="text" id="repo" placeholder="repository-name" />
       </div>
 
@@ -434,7 +117,30 @@
 
       <div class="field">
         <label>Файл</label>
-        <input type="file" id="file" />
+        <div class="dropzone" id="dropzone">
+          <input type="file" id="file" />
+          <div class="dropzone-icon">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+          </div>
+          <div class="dropzone-text">
+            <strong>Перетащите файл сюда</strong> или нажмите для выбора
+          </div>
+          <div class="dropzone-hint">Максимум ≈ 2.2 ГБ</div>
+          <div class="dropzone-filename" id="dropzoneFilename"></div>
+        </div>
       </div>
 
       <button class="btn" id="uploadBtn" onclick="uploadRelease()">
@@ -458,226 +164,20 @@
       <div class="log" id="log"></div>
     </div>
 
-    <script>
-      let currentMode = 'auto';
-
-      function setMode(mode) {
-        currentMode = mode;
-        document
-          .getElementById('modeAuto')
-          .classList.toggle('active', mode === 'auto');
-        document
-          .getElementById('modeManual')
-          .classList.toggle('active', mode === 'manual');
-        document
-          .getElementById('manualFields')
-          .classList.toggle('visible', mode === 'manual');
-        document.getElementById('file').addEventListener('change', function () {
-          const file = this.files[0];
-          if (!file) return;
-
-          const name = file.name;
-          const lastDot = name.lastIndexOf('.');
-          const baseName = lastDot > 0 ? name.slice(0, lastDot) : name;
-          const ext = lastDot > 0 ? name.slice(lastDot) : '';
-
-          document.getElementById('customFilename').value = baseName;
-          document.getElementById('fileExt').textContent = ext || '';
-        });
-      }
-
-      function getTime() {
-        const now = new Date();
-        return now.toLocaleTimeString('ru-RU', {
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-        });
-      }
-
-      function log(msg, type = 'info') {
-        const el = document.getElementById('log');
-        el.classList.add('visible');
-
-        const icons = {
-          info: '→',
-          success: '✓',
-          error: '✕',
-        };
-
-        const entry = document.createElement('div');
-        entry.className = `log-entry ${type}`;
-        entry.innerHTML = `
-          <span class="log-time">${getTime()}</span>
-          <span class="log-icon">${icons[type] || '→'}</span>
-          <span class="log-msg">${msg}</span>
-        `;
-        el.appendChild(entry);
-        el.scrollTop = el.scrollHeight;
-      }
-
-      function clearLog() {
-        const el = document.getElementById('log');
-        el.innerHTML = '';
-        el.classList.remove('visible');
-      }
-
-      function generateTag() {
-        const now = new Date();
-        const pad = (n) => String(n).padStart(2, '0');
-        return `v${now.getFullYear()}.${pad(now.getMonth() + 1)}.${pad(now.getDate())}.${pad(now.getHours())}${pad(now.getMinutes())}`;
-      }
-
-      async function uploadRelease() {
-        const token = document.getElementById('token').value.trim();
-        const owner = document.getElementById('owner').value.trim();
-        const repo = document.getElementById('repo').value.trim();
-        const fileInput = document.getElementById('file');
-        const btn = document.getElementById('uploadBtn');
-
-        clearLog();
-
-        if (!token || !owner || !repo) {
-          log('Заполните Token, Owner и Repository', 'error');
-          return;
-        }
-        if (!fileInput.files.length) {
-          log('Выберите файл', 'error');
-          return;
-        }
-
-        const file = fileInput.files[0];
-        let tag, releaseName, filename;
-
-        if (currentMode === 'manual') {
-          tag = document.getElementById('customTag').value.trim();
-          releaseName = document.getElementById('customName').value.trim();
-
-          const baseName = document
-            .getElementById('customFilename')
-            .value.trim();
-          const ext = document.getElementById('fileExt').textContent;
-          filename = baseName + ext;
-
-          if (!tag) {
-            log('Укажите Tag', 'error');
-            return;
-          }
-          if (!releaseName) {
-            log('Укажите название релиза', 'error');
-            return;
-          }
-          if (!baseName) {
-            log('Укажите имя файла', 'error');
-            return;
-          }
-        } else {
-          tag = generateTag();
-          releaseName = `Release ${tag}`;
-          filename = file.name;
-        }
-
-        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/releases`;
-
-        const WORKER_URL =
-          'https://zerocloud-upload.frozenjuggernaut.workers.dev/';
-
-        btn.disabled = true;
-        btn.innerHTML = 'Загрузка...';
-
-        log(`Tag: ${tag}`, 'info');
-        log(`Релиз: ${releaseName}`, 'info');
-        log(`Файл: ${filename}`, 'info');
-        log('Создаю релиз...', 'info');
-
-        try {
-          const createRes = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-              Authorization: `token ${token}`,
-              Accept: 'application/vnd.github+json',
-              'X-GitHub-Api-Version': '2022-11-28',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              tag_name: tag,
-              name: releaseName,
-              body: `Релиз создан через Zerocloud`,
-              draft: false,
-              prerelease: false,
-            }),
-          });
-
-          const responseText = await createRes.text();
-          let data;
-          try {
-            data = JSON.parse(responseText);
-          } catch (e) {
-            data = responseText;
-          }
-
-          if (!createRes.ok) {
-            log(
-              `Ошибка ${createRes.status}: ${data.message || JSON.stringify(data)}`,
-              'error'
-            );
-            throw new Error('create failed');
-          }
-
-          log(`Релиз создан`, 'success');
-          log(data.html_url, 'success');
-
-          log('Загружаю файл...', 'info');
-
-          const uploadUrl = data.upload_url.replace(
-            '{?name,label}',
-            `?name=${encodeURIComponent(filename)}`
-          );
-
-          const formData = new FormData();
-          formData.append('token', token);
-          formData.append('upload_url', uploadUrl);
-          formData.append('file', file);
-
-          const uploadRes = await fetch(WORKER_URL, {
-            method: 'POST',
-            body: formData,
-          });
-
-          const uploadText = await uploadRes.text();
-          let asset;
-          try {
-            asset = JSON.parse(uploadText);
-          } catch (e) {
-            asset = uploadText;
-          }
-
-          if (!uploadRes.ok) {
-            log(
-              `Ошибка загрузки: ${asset.message || JSON.stringify(asset)}`,
-              'error'
-            );
-            throw new Error('upload failed');
-          }
-
-          log('Готово!', 'success');
-          log(asset.browser_download_url, 'success');
-        } catch (e) {
-          if (e.message !== 'create failed' && e.message !== 'upload failed') {
-            log('Ошибка: ' + e.message, 'error');
-          }
-        } finally {
-          btn.disabled = false;
-          btn.innerHTML = `
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline points="17 8 12 3 7 8"/>
-        <line x1="12" y1="3" x2="12" y2="15"/>
-      </svg>
-      Загрузить и отправить
-    `;
-        }
-      }
-    </script>
+    <div class="footer-note">
+      <strong>Важно:</strong> лимит GitHub на один файл в релизе —
+      <strong>≈ 2.2 ГБ</strong>.<br />
+      При загрузке больших файлов <strong>отключите VPN / прокси</strong> —
+      иначе соединение может оборваться.
+      <br />
+      <br />
+      <a
+        href="https://xqr4d.github.io/XQR4D/"
+        className="transition hover:opacity-70"
+        style="color: var(--accent); text-decoration: none"
+      >
+        Разработчик
+      </a>
+    </div>
   </body>
 </html>
